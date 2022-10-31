@@ -6,12 +6,10 @@ namespace _ABRAMS__CST_150_Milestone_2
 {
     public partial class Form1 : Form
     {
+        // Takes inventory file and initiate lists to reading/writing store inventory objects and printing to listbox
         string filePath = @"C:\Users\j4red\Downloads\Inventory.txt";
-
         List<string> lines = new List<string>();
-
         List<Inventory> stock = new List<Inventory>();
-
         List<string> outContents = new List<string>();
 
 
@@ -19,21 +17,25 @@ namespace _ABRAMS__CST_150_Milestone_2
         {
             InitializeComponent();
 
-
-
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            // Read from inventory.txt
             lines = File.ReadAllLines(filePath).ToList();
 
+            // for each line, seperate each word by the "," and add each word to the stock list.
             foreach (string line in lines)
             {
                 string[] items = line.Split(',');
                 Inventory i = new Inventory(items[0], items[1], items[2], items[3], items[4]);
                 stock.Add(i);
             }
+
+            // Print to headers to listbox
             listBoxOutput.Items.Add("Code" + "\t\t" + "Name" + "\t\t" + "Cost" + "\t\t" + "Quantity" + "\t\t" + "Category" + "\t\t");
+
+            // Print items to listbox
             foreach (Inventory i in stock)
             {
                 listBoxOutput.Items.Add(i.printFormat());
@@ -63,18 +65,11 @@ namespace _ABRAMS__CST_150_Milestone_2
             {
                 string[] items = line.Split(',');
                 Inventory p = new Inventory(items[0], items[1], items[2], items[3], items[4]);
-                stock.Add(p);
-            }
-
-            foreach (Inventory p in stock)
-            {
-                listBoxOutput.Items.Add(p.printFormat());
+                stock.Add(i);
             }
 
             // Remove Object
             outContents.Clear();
-            
-
 
             // Clear the TextBox controls.
             codeInput.Text = "";
@@ -85,30 +80,6 @@ namespace _ABRAMS__CST_150_Milestone_2
 
             // Reset the focus.
             codeInput.Focus();
-
-
-
-
-
-            /*List<string> outContents = new List<string>();
-
-            foreach (Inventory i in stock)
-            {
-                outContents.Add(i.fileFormat());
-            }
-            String outFile = @"C:\Users\j4red\Downloads\InventoryOut.txt";
-            File.WriteAllLines(outFile, outContents);*/
-
-
-
-            // Create Inventory object.
-            //Inventory item = new Inventory();
-
-            // Get the item data.
-            //GetItemData(item);
-
-            // Display the item data.
-            //itemDisplayOutput.Items.Add(item.Code + "         " + item.Name + "         $" + item.Cost + "         " + item.Quantity + "         " + "         " + item.Category);
         }
 
         private void clearButton_Click(object sender, EventArgs e)
@@ -126,16 +97,18 @@ namespace _ABRAMS__CST_150_Milestone_2
 
         private void searchButton_Click_1(object sender, EventArgs e)
         {
+            // If Name radio button is checked, search name.
             if (radioButtonName.Checked)
             {
                 listBoxOutput.ClearSelected();
-                //var item = stock.Find(Name.searchInput.Text);
-                //listBoxOutput.Items.Add(stock.Contains(searchInput.Text));
             }
+            // If Code radio button is checked, search code.
             else if (radioButtonCode.Checked)
             {
-
+                listBoxOutput.ClearSelected();
             }
+
+            // If no radio button is checked, prompt user to select a search option.
             else
             {
                 MessageBox.Show("Select a Search Option");
