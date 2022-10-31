@@ -1,0 +1,4 @@
+001, Apple, 1, 50, Fruit
+002, Banana, 2, 30, Fruit
+003, Broccoli, 2, 40, Vegetable
+004, Spinach, 3, 20, Vegetable
